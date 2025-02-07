@@ -11,6 +11,18 @@ function App() {
 
   const usersUrl = "https://boolean-uk-api-server.fly.dev/Dev-Marlin/contact";
   const [users, setUsers] = useState([]);
+
+  const adviceUrl ="https://api.adviceslip.com/advice";
+  const [advice, setAdvice] = useState({
+    slip: {
+      id: null,
+      advice: ""
+    }
+  });
+
+  const [getAdvice, setGetAdvice] = useState(false);
+
+  const [favouriteAdvice, setFavouriteAdvice] = useState([]);
   
   useEffect(() => {
     const fetchArt = async () => {
@@ -30,11 +42,29 @@ function App() {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    const fetchAdvice = async () => {
+      const response = await fetch(adviceUrl);
+      const jsonData = await response.json();
+      setAdvice(jsonData);
+    };
+    fetchAdvice();
+  }, [getAdvice]);
+
+  function addFavourite(fav)
+  {
+    setFavouriteAdvice([...favouriteAdvice, fav]);
+  }
+
   return (
     <div className="main-layout">
       <ArtsSection art={art} url={artUrl}/>
       <UsersSection users={users}/>
-      <AdviceSection />
+      <AdviceSection advice = {advice} 
+                     setGetAdvice ={setGetAdvice} 
+                     getAdvice={getAdvice}
+                     favouriteAdvice={favouriteAdvice}
+                     addFavourite={addFavourite}/>
     </div>
   )
 }

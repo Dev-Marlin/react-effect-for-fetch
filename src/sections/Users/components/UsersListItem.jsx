@@ -1,7 +1,6 @@
 import React from 'react'
 import './User.css'
 function UsersListItem(prop) {
-    console.log(prop.user)
   return (
     <li className="user">
         <img
