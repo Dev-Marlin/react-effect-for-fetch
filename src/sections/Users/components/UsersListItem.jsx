@@ -2,7 +2,7 @@ import React from 'react'
 import './User.css'
 function UsersListItem(prop) {
   return (
-    <li className="user">
+    <li className="user" style={{background: prop.user.favouriteColour}}>
         <img
         src={prop.user.profileImage}
         alt={prop.user.firstName+" "+prop.user.lastName}/>
