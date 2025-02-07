@@ -8,21 +8,32 @@ import { useState, useEffect } from 'react';
 function App() {
   const artUrl = "https://boolean-uk-api-server.fly.dev/art";
   const [art, setArt] = useState([]);
+
+  const usersUrl = "https://boolean-uk-api-server.fly.dev/Dev-Marlin/contact";
+  const [users, setUsers] = useState([]);
   
   useEffect(() => {
     const fetchArt = async () => {
       const response = await fetch(artUrl);
       const jsonData = await response.json();
-      console.log(jsonData);
       setArt(jsonData);
     };
     fetchArt();
   }, []);
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const response = await fetch(usersUrl);
+      const jsonData = await response.json();
+      setUsers(jsonData);
+    };
+    fetchUsers();
+  }, []);
+
   return (
     <div className="main-layout">
       <ArtsSection art={art} url={artUrl}/>
-      <UsersSection />
+      <UsersSection users={users}/>
       <AdviceSection />
     </div>
   )
