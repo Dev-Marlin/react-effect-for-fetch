@@ -42,18 +42,26 @@ function App() {
     fetchUsers();
   }, []);
 
+  const fetchAdvice = async () => {
+    const response = await fetch(adviceUrl);
+    const jsonData = await response.json();
+    setAdvice(jsonData);
+  };
+
+  const fetchAdvice2 = async (url, action) => {
+    const response = await fetch(url);
+    const jsonData = await response.json();
+    action(jsonData);
+  };
   useEffect(() => {
-    const fetchAdvice = async () => {
-      const response = await fetch(adviceUrl);
-      const jsonData = await response.json();
-      setAdvice(jsonData);
-    };
-    fetchAdvice();
+    //fetchAdvice();
+    fetchAdvice2(adviceUrl, setAdvice);
   }, [getAdvice]);
 
   function addFavourite(fav)
   {
-    setFavouriteAdvice([...favouriteAdvice, fav]);
+    if(!favouriteAdvice.includes(fav))
+      setFavouriteAdvice([...favouriteAdvice, fav]);
   }
 
   return (
